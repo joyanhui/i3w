@@ -4,7 +4,7 @@
 
 ```
 sudo pacman -S xorg-server
-sudo pacmsn -S  xorg-xinit 
+sudo pacmsn -S xorg-xinit 
 sudo pacman -S ttf-dejavu wqy-microhei
 sudo pacman -S fcitx-im fcitx-configtool fcitx-googlepinyin
 sudo pacman -S fish
