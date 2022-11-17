@@ -10,7 +10,7 @@ sudo pacman -S fcitx-im fcitx-configtool fcitx-googlepinyin
 sudo pacman -S fish
 sudo pacman -S flameshot
 sudo pacman -S i3-gaps i3status
-sudo pacman -S mate-terminal
+sudo pacman -S mate-terminal feh
 sudo pacman -S network-manager-applet nm-connection-editor 
 # nm-applet nm-connection-editor
 # 设置wifi sudo nmcli device wifi connect wifi名称 password wifi密码
