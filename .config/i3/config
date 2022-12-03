@@ -23,10 +23,6 @@ font pango:monospace 8
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
-#壁纸
-exec_always --no-startup-id feh --randomize  --bg-fill ~/bg
-#半透明
-exec_always --no-startup-id picom 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -48,13 +44,26 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+#壁纸
+exec_always --no-startup-id feh --randomize  --bg-fill ~/wallpaper
+#半透明
+exec_always --no-startup-id picom
+
+#分辨率
+exec --no-startup-id xrandr --output Virtual-1 --mode 1920x1080
+#输入法
+exec --no-startup-id fcitx -d
+#截屏工具
+exec --no-startup-id flameshot 
+
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
 tiling_drag modifier titlebar
 
 # start a terminal 终端
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec mate-terminal
+#bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec env WINIT_UNIX_BACKEND=x11 alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
