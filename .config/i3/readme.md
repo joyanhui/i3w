@@ -1,4 +1,4 @@
-
+## 依赖和对应
 ```
 # 所需软件
 pacman -S  ttf-jetbrains-mono # 终端和i3标题栏用字体
