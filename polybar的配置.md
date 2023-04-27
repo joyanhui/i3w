@@ -5,8 +5,7 @@ pacman -S noto-fonts-emoji pavucontrol #ttf-jetbrains-mono
 
 ## 配置文件
 `mkdir ~/.config/polybar/`
-```
-cat > ~/.config/polybar/config.ini << \EOF
+```cat > ~/.config/polybar/config.ini << \EOF
 [colors]
 ;background = ${xrdb:color0:#222}
 background = #cc222222
@@ -18,7 +17,6 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
-
 [settings]
 screenchange-reload = true
 ;compositing-background = xor
@@ -29,35 +27,33 @@ screenchange-reload = true
 
 [global/wm]
 margin-top = 1
+;margin-bottom = 3
 margin-bottom = 3
-
-
 [bar/mybar]
 ;monitor = ${env:MONITOR:HDMI-1}
 ;width = 100%
 ;height = 25
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 12
+radius = 10
 fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
-
+# 这个线可以区分工作区激活
 line-size = 4
 line-color = #f00
-
-border-size = 4
+# 外框 和颜色 这里直接去掉了
+border-size = 0
 border-color = #00000000
-
-padding-left = 2
-padding-right = 2
-
+# 左右留白 右侧 会影响和托盘的距离
+padding-left = 5
+padding-right = 5
+# 模块之间的左右间隙
 module-margin-left = 1
-module-margin-right = 2
-
-; https://github.com/ryanoasis/nerd-fonts
-; https://www.nerdfonts.com/cheat-sheet
+module-margin-right = 1
+#字体定义
+; https://www.nerdfonts.com/cheat-sheet https://github.com/ryanoasis/nerd-fonts
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=10:antialias=false;0
 font-2 = Noto Sans Symbols2:style=Regular:size=12
@@ -65,26 +61,22 @@ font-3 = Font Awesome 5 Free:style=Solid:size=12
 font-4 = Font Awesome 5 Brands:style=Regular:size=12
 font-5 = DejaVu Sans:style=Bold:size=12
 font-6 = NotoColorEmoji:pixelsize=5;1:fontformat=truetype:scale=10:antialias=true;1
-
-
+# 排列
 modules-left = menu-apps i3
-;modules-center = mpd
 ;modules-center = wireless-network wired-network cpu memory
 ;modules-right = system-usb-udev xkeyboard pulseaudio backlight date battery
-modules-center = date 
-modules-right = cpu memory pulseaudio  xkeyboard
-
+modules-center =  cpu temperature memory
+modules-right = pulseaudio xkeyboard date
+# 托盘
 tray-position = right
 tray-padding = 2
 tray-background = ${colors.background}
 transparent = true
 
-
 cursor-click = pointer
 cursor-scroll = ns-resize
 
 ;====================================
-
 
 ; ===菜单===
 ; https://github.com/polybar/polybar/wiki/Module:-menu
@@ -150,98 +142,72 @@ label-visible = %index%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
-
 ; 设置紧急提示的工作区
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
-
 ; 工作区之间的分隔符
 ; label-separator = |
-
-
 ; ===网络===
 ; https://github.com/polybar/polybar/wiki/Module:-network
 ;[module/wired-network]
 ;type = internal/network
 ;interface = enp4s0
 ;interval = 3.0
-
 ; 间隔宽度
 ;udspeed-minwidth = 3
 ; 所以端口累计
 ;accumulate-stats = true
 ; 对未知状态的网络设备启用
 ;unknown-as-up = true
-
 ;format-connected = <label-connected>
 ;format-disconnected = <label-disconnected>
-
 ;label-connected =   %linkspeed%  %upspeed% %downspeed%
 ;label-connected-foreground = #00FFFF
-
 ;label-disconnected = 
 ;label-disconnected-foreground = #66ffffff
-
-
 ;[module/wireless-network]
 ;type = internal/network
 ;interface = wlp3s0
-
 ;interval = 3.0
-
 ; 间隔宽度
 ;udspeed-minwidth = 3
 ; 所有端口累计
 ;accumulate-stats = true
 ; 对未知状态的网络设备启用
 ;unknown-as-up = true
-
 ;format-connected = <ramp-signal> <label-connected>
 ;format-disconnected = <label-disconnected>
-
 ;label-connected =  %essid% %upspeed% %downspeed%
 ;label-connected-foreground = #00FFFF
-
 ;label-disconnected = 
 ;label-disconnected-foreground = #66ffffff
-
 ;ramp-signal-0 = 
 ;ramp-signal-1 = 
 ;ramp-signal-2 = 
 ;ramp-signal-3 = 
 ;ramp-signal-4 = 
 ;ramp-signal-5 = 
-
 ;ramp-signal-0-foreground = #ff5555
 ;ramp-signal-1-foreground = #ff5555
 ;ramp-signal-2-foreground = #fba922
 ;ramp-signal-3-foreground = #fba922
 ;ramp-signal-4-foreground = #aaff77
 ;ramp-signal-5-foreground = #aaff77
-
-
 ; ===键盘提示===
 ; https://github.com/polybar/polybar/wiki/Module:-xkeyboard
 [module/xkeyboard]
 type = internal/xkeyboard
-
-
 ; 忽略列表
 blacklist-0 = scroll lock
-
 ; <label-indicator>
 format = <label-indicator>
 format-spacing = 1
-
 label-indicator-on-capslock = 🔓
 label-indicator-off-capslock = 
-;label-indicator-on-numlock = 
-;label-indicator-off-numlock =
-
+label-indicator-on-numlock = 🔢
+label-indicator-off-numlock =
 label-indicator-on-capslock-foreground = #ff5555
-
-
 ; ===音量===
 ; https://github.com/polybar/polybar/wiki/Module:-pulseaudio
 [module/pulseaudio]
@@ -300,7 +266,7 @@ type = internal/memory
 ; 刷新间隔，默认: 1
 interval = 3
 
-format = <label> <ramp-used> <ramp-free>
+format = <label> <ramp-used> / <ramp-free>
 
 label = RAM  %gb_used%/%gb_free%
 label-foreground = #9A32DB
@@ -469,7 +435,27 @@ time-format = %H:%M
 ;tail = true
 ;click-left = ~/.config/polybar/scripts/system-usb-udev.sh --mount &
 ;click-right = ~/.config/polybar/scripts/system-usb-udev.sh --unmount &
+
+
+[module/temperature]
+type = internal/temperature
+interval = 2
+thermal-zone = 0
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+base-temperature = 20
+warn-temperature = 60
+units = false
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+label =  %temperature-c%℃
+label-warn =  %temperature-c%℃
+label-warn-foreground = #f00s.
+ramp-0 = 
+ramp-1 = 
+ramp-2 = ♨
+ramp-foreground = #55
 EOF
+
 
 ```
 
