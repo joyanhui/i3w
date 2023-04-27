@@ -23,24 +23,24 @@ exec --no-startup-id fcitx5 #输入法
 #exec --no-startup-id pulseaudio
 exec_always --no-startup-id feh --randomize --bg-fill ~/bg/* #壁纸
 #exec --no-startup-id xfce4-panel --disable-wm-check #banner
+exec_always --no-startup-id sh $HOME/.config/polybar/polybar_run.sh
 #设置窗口边框等等
 #new_window none
 #new_float normal
 #hide_edge_borders both
-#设置窗口间距
+#设置窗口间距 内部2 外部 不要 不然和 polybar之间 间隙很大
 gaps inner 2
-gaps outer 2
+gaps outer 0
 # 窗口标题和颜色
 title_align center
 #  class                 border    background   text      indicator  child_border
-client.focused           #4c7899    #285577    #ffffff    #2e9ef4    #285577
+client.focused           #3b5bcd    #32458b    #ffffff    #2e9ef4    #285577
 client.focused_inactive  #81c2d6    #5f676a    #ffffff    #484e50    #0b6e48
 client.unfocused         #c9cabb    #222222    #888888    #292d2e    #222222
 client.urgent            #2f343a    #900000    #ffffff    #199475    #900000
 client.placeholder       #a2b4ba    #0c0c0c    #ffffff    #1793d0    #0c0c0c
 client.background        #82abba
 
-exec_always --no-startup-id sh $HOME/.config/polybar/polybar_run.sh
 
 
 # 音量
