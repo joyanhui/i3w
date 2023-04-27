@@ -54,10 +54,8 @@ fi
 #xterm -geometry 80x20+494-0 &
 #exec xterm -geometry 80x66+0+0 -name login
 
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=\@im=fcitx
-fcitx &
-flameshot & 
-nm-applet & 
-exec  i3
+# i3
+pulseaudio &
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+exec dbus-launch i3
