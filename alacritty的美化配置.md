@@ -2,6 +2,10 @@
 sudo pacman -S  ttf-jetbrains-mono 
 mkdir ~/.config/alacritty/
 ```
+alacritty ssh远程nano vim 等无法使用的问题 在.bashrc 或者 [.zshrc ](https://github.com/joyanhui/oh-my-zsh/blob/f35093a98cb25ec7e727116ddb6c466a52a4c0e3/.zshrc#LL111C1-L111C45)添加别名
+```
+alias ssh="TERM=xterm-256color $(which ssh)"
+```
 
 ```
 cat > ~/.config/alacritty/alacritty.yml<< \EOF
