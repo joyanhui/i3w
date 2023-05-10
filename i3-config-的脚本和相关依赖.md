@@ -9,8 +9,7 @@ wget  https://ghproxy.com/https://raw.githubusercontent.com/joyanhui/file.leiyan
 ```
 
 
-```
-cat > ~/.config/i3/config << \EOF
+```cat > ~/.config/i3/config << \EOF
 # 左alt Mod1
 set $mod Mod4
 font pango:JetBrains Mono NL Italic 8 #font pango:monospace 8 字体
@@ -43,12 +42,18 @@ client.background        #82abba
 
 
 
-# 音量
+
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# 音量  yay -S pulseaudio-ctl  我这里远程桌面用 不能直接用
+bindsym $mod+Control+Left          exec --no-startup-id  pulseaudio-ctl mute
+bindsym $mod+Control+Right         exec --no-startup-id  pulseaudio-ctl mute
+bindsym XF86AudioMicMute           exec --no-startup-id  pulseaudio-ctl mute-input
+bindsym $mod+Control+Up            exec --no-startup-id  pulseaudio-ctl up 5 
+bindsym $mod+Control+Down          exec --no-startup-id  pulseaudio-ctl down 5 
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+#bindsym XF86AudioMicMute exec --no-startu\\p-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 #应用程序 绑定
 bindsym Print --release exec /usr/bin/flameshot gui # 截图
@@ -57,7 +62,7 @@ bindsym $mod+Return exec alacritty
 #bindsym Control+Mod1+t exec xfce4-terminal	#终端窗口 兼容xfce和gnome
 #bindsym $mod+t exec xfce4-terminal	#新
 bindsym $mod+t exec alacritty
-bindsym $mod+e exec thunar #文件管理器
+bindsym $mod+e exec thunar #文件管理器  gvfs gvfs-smb sshfs thunar-volman
 
 #启动器 xfce4-appfinder  会自己记住窗口大小 Control+Mod1+space 和mac下一致
 #bindsym Control+Mod1+space exec xfce4-appfinder 
@@ -89,14 +94,16 @@ for_window [window_role="task_dialog"]	floating enable
 #for_window [class="Xfce4-terminal"]	floating enable
 for_window [class="Thunar"]		floating enable
 for_window [class="Xfce4-appfinder"]	floating enable
-for_window [class="QQ"]  		floating enable
+#for_window [class="QQ"]  		floating enable
 for_window [class="Xarchiver"]        	floating enable
 for_window [class="Google-chrome"]	border pixel 1
 for_window [class="Pavucontrol"]        floating enable
-for_window [class="TelegramDesktop"]    floating enable
+#for_window [class="TelegramDesktop"]    floating enable
 for_window [class="Xfce4-panel"]        floating enable
 for_window [class="fcitx5-config-qt"]   floating enable
 for_window [class="Plank"]   floating enable
+for_window [class="icalingua"]   floating enable
+for_window [class="xfreerdp"]   floating disable
 
 
 #---移动窗口--
@@ -119,7 +126,7 @@ bindsym $mod+Mod1+Left        resize shrink width 10 px or 10 ppt
 bindsym $mod+Mod1+Down        resize grow height 10 px or 10 ppt
 bindsym $mod+Mod1+Up          resize shrink height 10 px or 10 ppt
 bindsym $mod+Mod1+Right       resize grow width 10 px or 10 ppt
-# 修改窗口固定大小 $mod+Alt 左键 大长 右键小长
+# 修改浮动窗口固定大小 $mod+Alt 左键 大长 右键小长
 bindsym --whole-window $mod+Mod1+button1 resize set width 1280 px  height 1000 px 
 bindsym --whole-window $mod+Mod1+button3 resize set width 630 px  height 1000 px 
 
@@ -134,7 +141,7 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 # alt+tab 需要用rofi
 bindsym Mod1+Tab exec --no-startup-id rofi -show window
-# 切换目标工作区
+# 切换目标工作区 
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
