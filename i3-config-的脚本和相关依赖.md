@@ -9,7 +9,9 @@ wget  https://ghproxy.com/https://raw.githubusercontent.com/joyanhui/file.leiyan
 ```
 
 
-```cat > ~/.config/i3/config << \EOF
+```
+
+cat > ~/.config/i3/config << \EOF
 # 左alt Mod1
 set $mod Mod4
 font pango:JetBrains Mono NL Italic 8 #font pango:monospace 8 字体
@@ -22,25 +24,24 @@ exec --no-startup-id fcitx5 #输入法
 #exec --no-startup-id pulseaudio
 exec_always --no-startup-id feh --randomize --bg-fill ~/bg/* #壁纸
 #exec --no-startup-id xfce4-panel --disable-wm-check #banner
-exec_always --no-startup-id sh $HOME/.config/polybar/polybar_run.sh
 #设置窗口边框等等
 #new_window none
 #new_float normal
 #hide_edge_borders both
-#设置窗口间距 内部2 外部 不要 不然和 polybar之间 间隙很大
+#设置窗口间距
 gaps inner 2
-gaps outer 0
+gaps outer 2
 # 窗口标题和颜色
 title_align center
 #  class                 border    background   text      indicator  child_border
-client.focused           #3b5bcd    #32458b    #ffffff    #2e9ef4    #285577
+client.focused           #4c7899    #285577    #ffffff    #2e9ef4    #285577
 client.focused_inactive  #81c2d6    #5f676a    #ffffff    #484e50    #0b6e48
 client.unfocused         #c9cabb    #222222    #888888    #292d2e    #222222
 client.urgent            #2f343a    #900000    #ffffff    #199475    #900000
 client.placeholder       #a2b4ba    #0c0c0c    #ffffff    #1793d0    #0c0c0c
 client.background        #82abba
 
-
+exec_always --no-startup-id sh ~/.config/polybar/launch.sh
 
 
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -62,7 +63,7 @@ bindsym $mod+Return exec alacritty
 #bindsym Control+Mod1+t exec xfce4-terminal	#终端窗口 兼容xfce和gnome
 #bindsym $mod+t exec xfce4-terminal	#新
 bindsym $mod+t exec alacritty
-bindsym $mod+e exec thunar #文件管理器  gvfs gvfs-smb sshfs thunar-volman
+bindsym $mod+e exec thunar #文件管理器
 
 #启动器 xfce4-appfinder  会自己记住窗口大小 Control+Mod1+space 和mac下一致
 #bindsym Control+Mod1+space exec xfce4-appfinder 
@@ -94,17 +95,16 @@ for_window [window_role="task_dialog"]	floating enable
 #for_window [class="Xfce4-terminal"]	floating enable
 for_window [class="Thunar"]		floating enable
 for_window [class="Xfce4-appfinder"]	floating enable
-#for_window [class="QQ"]  		floating enable
+for_window [class="QQ"]  		floating enable
 for_window [class="Xarchiver"]        	floating enable
-for_window [class="Google-chrome"]	border pixel 1
 for_window [class="Pavucontrol"]        floating enable
-#for_window [class="TelegramDesktop"]    floating enable
+for_window [class="TelegramDesktop"]    floating enable
 for_window [class="Xfce4-panel"]        floating enable
 for_window [class="fcitx5-config-qt"]   floating enable
-for_window [class="Plank"]   floating enable
-for_window [class="icalingua"]   floating enable
-for_window [class="xfreerdp"]   floating disable
-
+for_window [class="Plank"]   		floating enable
+#自动隐藏边框
+for_window [class="Google-chrome"]	border pixel 1
+for_window [class="firefox"]		border pixel 1
 
 #---移动窗口--
 # 鼠标+$mod 拖动窗口 
@@ -126,7 +126,7 @@ bindsym $mod+Mod1+Left        resize shrink width 10 px or 10 ppt
 bindsym $mod+Mod1+Down        resize grow height 10 px or 10 ppt
 bindsym $mod+Mod1+Up          resize shrink height 10 px or 10 ppt
 bindsym $mod+Mod1+Right       resize grow width 10 px or 10 ppt
-# 修改浮动窗口固定大小 $mod+Alt 左键 大长 右键小长
+# 修改窗口固定大小 $mod+Alt 左键 大长 右键小长
 bindsym --whole-window $mod+Mod1+button1 resize set width 1280 px  height 1000 px 
 bindsym --whole-window $mod+Mod1+button3 resize set width 630 px  height 1000 px 
 
@@ -141,7 +141,7 @@ bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 # alt+tab 需要用rofi
 bindsym Mod1+Tab exec --no-startup-id rofi -show window
-# 切换目标工作区 
+# 切换目标工作区
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
