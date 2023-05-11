@@ -9,4 +9,4 @@ mkdir ~/bg && cd ~/bg
 wget  https://ghproxy.com/https://raw.githubusercontent.com/joyanhui/file.leiyanhui.com/dwm-wallpaper/zifa.jpg
 ```
 
-[创建配置文件](https://github.com/joyanhui/i3w/blob/main/i3config.sh)
+用这里的脚本直接[创建配置文件](https://github.com/joyanhui/i3w/blob/main/i3config.sh)
