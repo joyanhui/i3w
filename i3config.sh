@@ -33,24 +33,21 @@ client.background        #82abba
 
 
 set $refresh_i3status killall -SIGUSR1 i3status
-# 音量  yay -S pulseaudio-ctl  我这里远程桌面用 不能直接用
-bindsym $mod+Control+Left          exec --no-startup-id  pulseaudio-ctl mute
-bindsym $mod+Control+Right         exec --no-startup-id  pulseaudio-ctl mute
-bindsym XF86AudioMicMute           exec --no-startup-id  pulseaudio-ctl mute-input
-bindsym $mod+Control+Up            exec --no-startup-id  pulseaudio-ctl up 5 
-bindsym $mod+Control+Down          exec --no-startup-id  pulseaudio-ctl down 5 
+# 音量   我这里远程桌面用 不能直接用 更换自定义快捷键
+bindsym $mod+Control+Left          exec --no-startup-id  pactl set-sink-mute @DEFAULT_SINK@ toggle 
+bindsym $mod+Control+Right         exec --no-startup-id  pactl set-sink-mute @DEFAULT_SINK@ toggle 
+bindsym XF86AudioMicMute           exec --no-startup-id  pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym $mod+Control+Up            exec --no-startup-id  pactl set-sink-volume @DEFAULT_SINK@ +5% 
+bindsym $mod+Control+Down          exec --no-startup-id  pactl set-sink-volume @DEFAULT_SINK@ -5% 
 #bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 #bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 #bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-#bindsym XF86AudioMicMute exec --no-startu\\p-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 #应用程序 绑定
 bindsym Print --release exec /usr/bin/flameshot gui # 截图
-#bindsym $mod+Return exec xfce4-terminal  --drop-down #终端 下拉 alacritty
+#bindsym $mod+Return exec xfce4-terminal  --drop-down #终端 下拉 
 bindsym $mod+Return exec alacritty
-#bindsym Control+Mod1+t exec xfce4-terminal	#终端窗口 兼容xfce和gnome
-#bindsym $mod+t exec xfce4-terminal	#新
-bindsym $mod+t exec alacritty
 bindsym $mod+e exec thunar #文件管理器  gvfs gvfs-smb sshfs thunar-volman
 
 #启动器 xfce4-appfinder  会自己记住窗口大小 Control+Mod1+space 和mac下一致
@@ -85,15 +82,14 @@ for_window [class="Thunar"]		floating enable
 for_window [class="Xfce4-appfinder"]	floating enable
 #for_window [class="QQ"]  		floating enable
 for_window [class="Xarchiver"]        	floating enable
-
 for_window [class="Pavucontrol"]        floating enable
 for_window [class="Xfce4-panel"]        floating enable
 for_window [class="fcitx5-config-qt"]   floating enable
-for_window [class="Plank"]   floating enable
-for_window [class="icalingua"]   floating enable
-for_window [class="xfreerdp"]   floating disable
+for_window [class="Plank"]              floating enable
+for_window [class="icalingua"]          floating enable
 #禁止浮动
 for_window [class="TelegramDesktop"]    floating disenable
+for_window [class="xfreerdp"]           floating disable
 #取消边框
 for_window [class="Google-chrome"]	border pixel 1
 for_window [class="firefox"]		border pixel 1
