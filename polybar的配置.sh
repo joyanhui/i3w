@@ -1,11 +1,6 @@
-## 字体和一个音量控制的右键依赖
-```
-pacman -S noto-fonts-emoji pavucontrol #ttf-jetbrains-mono 
-```
-
-## 配置文件
-`mkdir ~/.config/polybar/`
-```cat > ~/.config/polybar/config.ini << \EOF
+#pacman -S noto-fonts-emoji pavucontrol #ttf-jetbrains-mono 
+mkdir ~/.config/polybar/
+cat > ~/.config/polybar/config.ini << \EOF
 [colors]
 ;background = ${xrdb:color0:#222}
 background = #cc222222
@@ -62,7 +57,7 @@ font-4 = Font Awesome 5 Brands:style=Regular:size=12
 font-5 = DejaVu Sans:style=Bold:size=12
 font-6 = NotoColorEmoji:pixelsize=5;1:fontformat=truetype:scale=10:antialias=true;1
 # 排列
-modules-left = menu-apps i3
+modules-left =  i3 menu-apps
 ;modules-center = wireless-network wired-network cpu memory
 ;modules-right = system-usb-udev xkeyboard pulseaudio backlight date battery
 modules-center =  cpu temperature memory
@@ -89,30 +84,44 @@ expand-right = true
 ; menu-LEVEL-N 与 label-NAME 属性相同，并附加 exec 属性
 ; 命令将使用 /bin/sh -c $COMMAND
 
-menu-0-0 = 浏览器
+menu-0-0 = 聊天软件
 menu-0-0-exec = #menu-apps.open.1
-menu-0-1 = 多媒体
+menu-0-1 = 浏览器
 menu-0-1-exec = #menu-apps.open.2
+menu-0-2 = 系统
+menu-0-2-exec = #menu-apps.open.3
 
-menu-1-0 = Firefox
-menu-1-0-exec = firefox
-menu-1-1 =  Chromium
-menu-1-1-exec = chromium
+menu-1-0 = QQ
+menu-1-0-exec = linuxqq
+menu-1-1 =  Telegram
+menu-1-1-exec = telegram-desktop 
+menu-1-2 =  微信Rdp
+menu-1-2-exec = xfreerdp  /u:yanhui  /dynamic-resolution /v:10.1.1.10:3389 +clipboard /sound:sys:alsa +compression  /drive:root,/
 
-menu-2-0 = Gimp
-menu-2-0-exec = gimp
-menu-2-1 = Scrot
-menu-2-1-exec = scrot
+menu-2-0 = Firefox
+menu-2-0-exec = firefox
+menu-2-1 = Chrome
+menu-2-1-exec = google-chrome-stable
+
+menu-3-0 = 终端
+menu-3-0-exec = alacritty
+menu-3-1 = 文件管理
+menu-3-1-exec = thunar
+menu-3-2 = rofi-drun
+menu-3-2-exec = rofi -show drun -run-shell-command '{terminal} -e zsh -ic "{cmd} && read"'
+menu-3-3 = rofi-show
+menu-3-3-exec = rofi -show window
+menu-3-4 = 随机换壁纸
+menu-3-4-exec =  feh --randomize --bg-fill ~/bg/* 
 
 ; <label-toggle> 可替换为 <label-(open|close)>
 ; 如果 expand-right 为 true ，则默认值为"<label-toggle><menu>"。注意，如果使用<label-toggle> 就必须定义 <label-open>
 ; format = <label-toggle> <menu>
 
 label-open = Apps
-label-close = X
-
+label-close = ❌
 ; 分隔元件
-label-separator = |
+label-separator = 🔸
 
 
 ; ===i3 工作区===
@@ -455,31 +464,3 @@ ramp-1 =
 ramp-2 = ♨
 ramp-foreground = #55
 EOF
-
-
-```
-
-
-## 启动脚本
-```
-cat > ~/.config/polybar/polybar_run.sh << \EOF
-#!/bin/bash
-# 终端可能已经有在运行的实例
-killall -q polybar
-# 等待进程被终止
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-# 运行Polybar，使用默认的配置文件路径 ~/.config/polybar/config
-polybar mybar &
-echo "Polybar runing..."
-EOF
-chmod + ~/.config/polybar/polybar_run.sh 
-# i3 exec_always --no-startup-id $HOME/.config/polybar/polybar_run.sh
-cat ~/.config/polybar/polybar_run.sh 
-
-```
-
-## i3启动命令
-```
-exec_always --no-startup-id sh $HOME/.config/polybar/polybar_run.sh
-
-```
