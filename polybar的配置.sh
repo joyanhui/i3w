@@ -60,7 +60,7 @@ font-6 = NotoColorEmoji:pixelsize=5;1:fontformat=truetype:scale=10:antialias=tru
 modules-left =  i3 menu-apps
 ;modules-center = wireless-network wired-network cpu memory
 ;modules-right = system-usb-udev xkeyboard pulseaudio backlight date battery
-modules-center =  cpu temperature memory
+modules-center =  cpu temperature memory wired-network weather
 modules-right = pulseaudio xkeyboard date
 # 托盘
 tray-position = right
@@ -72,6 +72,13 @@ cursor-click = pointer
 cursor-scroll = ns-resize
 
 ;====================================
+; ===天气预报 需要单独的pyhtone插件===
+[module/weather]
+type = custom/script
+exec = python3 ~/.config/polybar/weather-plugin.py
+interval = 960
+tail = true
+click-left= exec firefox https://openweathermap.org/city/1793724
 
 ; ===菜单===
 ; https://github.com/polybar/polybar/wiki/Module:-menu
@@ -88,7 +95,7 @@ menu-0-0 = 聊天软件
 menu-0-0-exec = #menu-apps.open.1
 menu-0-1 = 浏览器
 menu-0-1-exec = #menu-apps.open.2
-menu-0-2 = 系统
+menu-0-2 = 系统/附件
 menu-0-2-exec = #menu-apps.open.3
 
 menu-1-0 = QQ
@@ -111,8 +118,14 @@ menu-3-2 = rofi-drun
 menu-3-2-exec = rofi -show drun -run-shell-command '{terminal} -e zsh -ic "{cmd} && read"'
 menu-3-3 = rofi-show
 menu-3-3-exec = rofi -show window
-menu-3-4 = 随机换壁纸
-menu-3-4-exec =  feh --randomize --bg-fill ~/bg/* 
+menu-3-4 = NotepadNext
+menu-3-4-exec = NotepadNext
+menu-3-5 = 随机换壁纸
+menu-3-5-exec =  feh --randomize --bg-fill ~/bg/* 
+menu-3-6 = 注销
+menu-3-6-exec = i3-msg exit
+
+
 
 ; <label-toggle> 可替换为 <label-(open|close)>
 ; 如果 expand-right 为 true ，则默认值为"<label-toggle><menu>"。注意，如果使用<label-toggle> 就必须定义 <label-open>
@@ -151,30 +164,35 @@ label-visible = %index%
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
-; 设置紧急提示的工作区
+; 有提示消息的 工作区
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 ; 工作区之间的分隔符
 ; label-separator = |
-; ===网络===
+
+
+
+; ===有线网络===
 ; https://github.com/polybar/polybar/wiki/Module:-network
-;[module/wired-network]
-;type = internal/network
-;interface = enp4s0
-;interval = 3.0
+[module/wired-network]
+type = internal/network
+interface = eth0
+interval = 3.0
 ; 间隔宽度
-;udspeed-minwidth = 3
-; 所以端口累计
-;accumulate-stats = true
+udspeed-minwidth = 1
+; 端口累计
+accumulate-stats = true
 ; 对未知状态的网络设备启用
-;unknown-as-up = true
-;format-connected = <label-connected>
-;format-disconnected = <label-disconnected>
+unknown-as-up = true
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
 ;label-connected =   %linkspeed%  %upspeed% %downspeed%
-;label-connected-foreground = #00FFFF
-;label-disconnected = 
-;label-disconnected-foreground = #66ffffff
+label-connected = ↘%upspeed% ↗%downspeed%
+label-connected-foreground = #00FFFF
+label-disconnected = 
+label-disconnected-foreground = #66ffffff
+; ===wifi===
 ;[module/wireless-network]
 ;type = internal/network
 ;interface = wlp3s0
@@ -187,7 +205,7 @@ label-urgent-padding = 2
 ;unknown-as-up = true
 ;format-connected = <ramp-signal> <label-connected>
 ;format-disconnected = <label-disconnected>
-;label-connected =  %essid% %upspeed% %downspeed%
+;label-connected =  %essid% %upspeed% %downspeed%
 ;label-connected-foreground = #00FFFF
 ;label-disconnected = 
 ;label-disconnected-foreground = #66ffffff
@@ -203,6 +221,7 @@ label-urgent-padding = 2
 ;ramp-signal-3-foreground = #fba922
 ;ramp-signal-4-foreground = #aaff77
 ;ramp-signal-5-foreground = #aaff77
+
 ; ===键盘提示===
 ; https://github.com/polybar/polybar/wiki/Module:-xkeyboard
 [module/xkeyboard]
@@ -217,6 +236,7 @@ label-indicator-off-capslock =
 label-indicator-on-numlock = 🔢
 label-indicator-off-numlock =
 label-indicator-on-capslock-foreground = #ff5555
+
 ; ===音量===
 ; https://github.com/polybar/polybar/wiki/Module:-pulseaudio
 [module/pulseaudio]
@@ -362,7 +382,7 @@ type = internal/date
 interval = 1.0
 format = <label>
 
-date = %Y-%m-%d 周 %w
+date = %Y-%m-%d 周 %u
 time = %H:%M
 
 ; 另一中格式
@@ -464,3 +484,4 @@ ramp-1 =
 ramp-2 = ♨
 ramp-foreground = #55
 EOF
+sh $HOME/.config/polybar/polybar_run.sh
