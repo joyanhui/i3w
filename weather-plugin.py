@@ -3,6 +3,7 @@
 import requests
 # https://openweathermap.org/city/1793724
 # 注意openweathermap的API_KEY 激活有延迟，网页显示激活不代表可用，需要等待一段时间
+# 记得修改 a2482de7cea7abc53ef6924245c932c9 为你自己的key,这个key是一个演示而已。
 # https://api.openweathermap.org/data/2.5/weather?id={城市ID}&appid={key}&units=Metric&lang=zh_cn
 REQ = requests.get("https://api.openweathermap.org/data/2.5/weather?id=1793724&appid=a2482de7cea7abc53ef6924245c932c9&units=Metric&lang=zh_cn")
 try:
